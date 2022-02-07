@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import MainSil from '../components/MainSil';
+import MainComponent from '../components/MainComponent';
 import 'styles/styles.scss';
 const MainBody = styled.div`
   width: 100%;
@@ -9,7 +9,7 @@ const MainBody = styled.div`
 `;
 const App: React.FC = () => (
   <MainBody>
-    <MainSil />
+    <MainComponent />
   </MainBody>
 );
 
