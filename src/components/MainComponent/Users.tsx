@@ -7,22 +7,27 @@ export type UserEntity = {
   lastName: string;
 };
 
-export type DumbUserTypes = {
+export type DumbUserProps = {
   onClick: () => void;
-  entity?: UserEntity;
+  entity?: UserEntity | null;
 };
-export const DumbUser: React.FC<DumbUserTypes> = ({
+
+export const DumbUser: React.FC<DumbUserProps> = ({
+  onClick,
   entity = {
     firstName: 'firstName',
     lastName: 'lastName',
   },
-  onClick,
 }) => {
-  return (
-    <button onClick={onClick}>
-      {entity.firstName} {entity.lastName}
-    </button>
-  );
+  // непонятно почему ругается на то что entity possibly could be null
+  if (entity) {
+    return (
+      <button onClick={onClick}>
+        {entity.firstName} {entity.lastName}
+      </button>
+    );
+  }
+  return <button onClick={onClick}>firstName lastName</button>;
 };
 
 export const ConnectedUser = withLoading(DumbUser);

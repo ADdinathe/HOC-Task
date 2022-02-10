@@ -1,12 +1,10 @@
 import * as React from 'react';
 
-import { DumbUserTypes, UserEntity } from './Users';
+import { DumbUserProps, UserEntity } from './Users';
 
-type MyComponentTypes = {
-  onClick: () => void;
-  entity?: UserEntity;
+interface ILoadableComponentProps extends DumbUserProps {
   loadEntity?: () => Promise<UserEntity>;
-};
+}
 
 export const loadFakeEntity = async (): Promise<UserEntity> => {
   await new Promise((res, rej) => {
@@ -15,8 +13,8 @@ export const loadFakeEntity = async (): Promise<UserEntity> => {
   });
 
   return {
-    firstName: 'firstName',
-    lastName: 'lastName',
+    firstName: 'Иван',
+    lastName: 'Иванов',
   };
 };
 
@@ -26,11 +24,13 @@ const Error = () => {
   return <div>error</div>;
 };
 
-export const withLoading = (DumbUser: React.FC<DumbUserTypes>) => {
-  const MyComponent: React.FC<MyComponentTypes> = (props: DumbUserTypes) => {
+export const withLoading = (
+  DumbUser: React.FC<DumbUserProps>
+): React.FC<ILoadableComponentProps> => {
+  return (props: DumbUserProps) => {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(false);
-    const [entity, setEntity] = React.useState<UserEntity>();
+    const [entity, setEntity] = React.useState<UserEntity | null>(null);
 
     React.useEffect(() => {
       setLoading(true);
@@ -46,8 +46,11 @@ export const withLoading = (DumbUser: React.FC<DumbUserTypes>) => {
             console.log(error);
           }
         );
+        return;
       }
+      setError(true);
     }, []);
+
     return (
       <>
         {error && <Error />}
@@ -56,6 +59,4 @@ export const withLoading = (DumbUser: React.FC<DumbUserTypes>) => {
       </>
     );
   };
-
-  return MyComponent;
 };

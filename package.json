@@ -4,7 +4,8 @@
   "main": "src/index.tsx",
   "license": "MIT",
   "scripts": {
-    "dev": "SET NODE_ENV=development& npx webpack serve --mode=development",
+    "dev": "NODE_ENV=development npx webpack serve --mode=development",
+    "win-dev": "SET NODE_ENV=development& npx webpack serve --mode=development",
     "build": "NODE_ENV=production npx webpack --mode=production",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint-fix": "eslint src --fix",
