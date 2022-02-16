@@ -19,15 +19,15 @@ export const DumbUser: React.FC<DumbUserProps> = ({
     lastName: 'lastName',
   },
 }) => {
-  // непонятно почему ругается на то что entity possibly could be null
-  if (entity) {
-    return (
-      <button onClick={onClick}>
-        {entity.firstName} {entity.lastName}
-      </button>
-    );
+  if (!entity) {
+    return null;
   }
-  return <button onClick={onClick}>firstName lastName</button>;
+
+  return (
+    <button onClick={onClick}>
+      {entity.firstName} {entity.lastName}
+    </button>
+  );
 };
 
 export const ConnectedUser = withLoading(DumbUser);
